@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "./logo.png";
 import axios from "axios";
 import backgroundDay from "./assets/background-day.jpg";
 import backgroundNight from "./assets/background-night.jpg";
@@ -136,7 +135,12 @@ class App extends React.Component {
           className="App-header"
           style={{ backgroundImage: `url(${backgroundImg})` }}
         >
-          <img src={logo} className="App-logo" alt="logo" />
+          {/* <img src={logo} className="App-logo" alt="logo" /> */}
+          <img
+            src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExam1rNWE1c29mOHN6bjl4cTdwMnc2b214dnZ4cXozdTlpNzhtMDQ4NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/fXt5Bh0RIHuJsVfgX0/giphy.gif"
+            alt="gif"
+            width="200px"
+          />
           <br />
           <form>
             <input
