@@ -2,6 +2,8 @@ import React from "react";
 import axios from "axios";
 import backgroundDay from "./assets/background-day.jpg";
 import backgroundNight from "./assets/background-night.jpg";
+import CurrWeather from "./components/CurrWeather";
+import ForecastWeather from "./components/ForecastWeather";
 import "./App.css";
 
 class App extends React.Component {
@@ -12,8 +14,30 @@ class App extends React.Component {
       currentCity: "",
       currentTemp: "",
       currentFeelsLike: "",
-      currentWeather: "",
+      currentWeatherDesc: "",
       currentWeatherIcon: "",
+      currentDate: "",
+      // DAY 2
+      day2Date: "",
+      day2Temp: "",
+      day2WeatherDesc: "",
+      day2WeatherIcon: "",
+      // DAY 3
+      day3Date: "",
+      day3Temp: "",
+      day3WeatherDesc: "",
+      day3WeatherIcon: "",
+      // DAY 4
+      day4Date: "",
+      day4Temp: "",
+      day4WeatherDesc: "",
+      day4WeatherIcon: "",
+      // DAY 5
+      day5Date: "",
+      day5Temp: "",
+      day5WeatherDesc: "",
+      day5WeatherIcon: "",
+      currentPage: "home",
       backgroundImg: backgroundDay,
     };
   }
@@ -37,6 +61,12 @@ class App extends React.Component {
   componentDidMount() {
     this.renderBackgroundImage();
   }
+
+  handlePage = (page) => {
+    this.setState({
+      currentPage: page,
+    });
+  };
 
   // Handle change function to store current user's input in state
   handleInputChange = (event) => {
@@ -78,17 +108,57 @@ class App extends React.Component {
         const { data: getWeatherData } = response;
         console.log(`current weather data: `, getWeatherData);
 
-        // we then update the state with the information retrieved from the API's data (aka currentWeatherData)!
+        // update the state with the information retrieved from the API's data (aka currentWeatherData)!
         this.setState({
           currentCity: getWeatherData.name,
           currentTemp: getWeatherData.main.temp,
           currentFeelsLike: getWeatherData.main.feels_like,
-          currentWeather: getWeatherData.weather[0].description,
+          currentWeatherDesc: getWeatherData.weather[0].description,
           currentWeatherIcon: getWeatherData.weather[0].icon,
-          // currentWeatherIcon: ,
         });
       })
 
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  getForecastData = () => {
+    this.getLocationCoordinates()
+      .then((locationCoords) =>
+        axios.get(
+          `https://api.openweathermap.org/data/2.5/forecast?lat=${locationCoords.lat}&lon=${locationCoords.lon}&appid=${process.env.REACT_APP_OPEN_WEATHER_API_KEY}&units=metric`
+        )
+      )
+      .then((response) => {
+        const { data: getForecastData } = response;
+        console.log(`forecast: `, getForecastData);
+
+        // update state
+        this.setState({
+          currentDate: getForecastData.list[0].dt_txt,
+          // DAY 2
+          day2Date: getForecastData.list[3].dt_txt,
+          day2Temp: getForecastData.list[3].main.temp,
+          day2WeatherDesc: getForecastData.list[3].weather[0].description,
+          day2WeatherIcon: getForecastData.list[3].weather[0].icon,
+          // DAY 3
+          day3Date: getForecastData.list[11].dt_txt,
+          day3Temp: getForecastData.list[11].main.temp,
+          day3WeatherDesc: getForecastData.list[11].weather[0].description,
+          day3WeatherIcon: getForecastData.list[11].weather[0].icon,
+          // DAY 4
+          day4Date: getForecastData.list[19].dt_txt,
+          day4Temp: getForecastData.list[19].main.temp,
+          day4WeatherDesc: getForecastData.list[19].weather[0].description,
+          day4WeatherIcon: getForecastData.list[19].weather[0].icon,
+          // DAY 5
+          day5Date: getForecastData.list[27].dt_txt,
+          day5Temp: getForecastData.list[27].main.temp,
+          day5WeatherDesc: getForecastData.list[27].weather[0].description,
+          day5WeatherIcon: getForecastData.list[27].weather[0].icon,
+        });
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -98,6 +168,7 @@ class App extends React.Component {
     event.preventDefault();
     this.getLocationCoordinates();
     this.getCurrentWeather();
+    this.getForecastData();
 
     this.setState({
       // reset input value after clicking submit button
@@ -111,23 +182,112 @@ class App extends React.Component {
       currentCity,
       currentTemp,
       currentFeelsLike,
-      currentWeather,
+      currentWeatherDesc,
       currentWeatherIcon,
+      currentPage,
     } = this.state;
 
-    const weatherIconImg = `https://openweathermap.org/img/wn/${currentWeatherIcon}@2x.png`;
+    const {
+      day2Date,
+      day2Temp,
+      day2WeatherDesc,
+      day2WeatherIcon,
+      day3Date,
+      day3Temp,
+      day3WeatherDesc,
+      day3WeatherIcon,
+      day4Date,
+      day4Temp,
+      day4WeatherDesc,
+      day4WeatherIcon,
+      day5Date,
+      day5Temp,
+      day5WeatherDesc,
+      day5WeatherIcon,
+    } = this.state;
+
+    // const weatherIconImg = `https://openweathermap.org/img/wn/${currentWeatherIcon}@2x.png`;
+
+    // const renderWeatherInfo = currentCity ? (
+    //   <div>
+    //     <img src={weatherIconImg} alt="weather icon" />
+    //     <p>Current City: {currentCity}</p>
+    //     <p>Current Temperature: {currentTemp}</p>
+    //     <p>Feels Like: {currentFeelsLike}</p>
+    //     <p>Current Weather: {currentWeather}</p>
+    //   </div>
+    // ) : (
+    //   <p>Enter a city to check weather 🌤🌧☃️</p>
+    // );
 
     const renderWeatherInfo = currentCity ? (
       <div>
-        <img src={weatherIconImg} alt="weather icon" />
-        <p>Current City: {currentCity}</p>
-        <p>Current Temperature: {currentTemp}</p>
-        <p>Feels Like: {currentFeelsLike}</p>
-        <p>Current Weather: {currentWeather}</p>
+        <p className="current-city">Current City: {currentCity}</p>
+        <button
+          className="forecast-button"
+          onClick={() => this.handlePage("forecast")}
+        >
+          5-Day Weather Forecast
+        </button>
+        <CurrWeather
+          currentWeatherIcon={currentWeatherIcon}
+          currentTemp={currentTemp}
+          currentFeelsLike={currentFeelsLike}
+          currentWeatherDesc={currentWeatherDesc}
+        />
       </div>
     ) : (
       <p>Enter a city to check weather 🌤🌧☃️</p>
     );
+
+    let pageNavigation;
+    if (currentPage === "forecast") {
+      pageNavigation = (
+        <ForecastWeather
+          day2Date={day2Date}
+          day2Temp={day2Temp}
+          day2WeatherDesc={day2WeatherDesc}
+          day2WeatherIcon={day2WeatherIcon}
+          day3Date={day3Date}
+          day3Temp={day3Temp}
+          day3WeatherDesc={day3WeatherDesc}
+          day3WeatherIcon={day3WeatherIcon}
+          day4Date={day4Date}
+          day4Temp={day4Temp}
+          day4WeatherDesc={day4WeatherDesc}
+          day4WeatherIcon={day4WeatherIcon}
+          day5Date={day5Date}
+          day5Temp={day5Temp}
+          day5WeatherDesc={day5WeatherDesc}
+          day5WeatherIcon={day5WeatherIcon}
+          handlePage={this.handlePage}
+        />
+      );
+    } else {
+      pageNavigation = (
+        <div className="home-page">
+          <img
+            src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExam1rNWE1c29mOHN6bjl4cTdwMnc2b214dnZ4cXozdTlpNzhtMDQ4NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/fXt5Bh0RIHuJsVfgX0/giphy.gif"
+            alt="gif"
+            className="img-header"
+          />
+          <br />
+          <form>
+            <input
+              type="text"
+              placeholder="Name of City"
+              onChange={this.handleInputChange}
+              value={this.inputCityValue}
+              required
+            />
+            <button variant="contained" onClick={this.handleSubmit}>
+              Check Weather
+            </button>
+          </form>
+          {renderWeatherInfo}
+        </div>
+      );
+    }
 
     return (
       <div className="App">
@@ -135,8 +295,8 @@ class App extends React.Component {
           className="App-header"
           style={{ backgroundImage: `url(${backgroundImg})` }}
         >
-          {/* <img src={logo} className="App-logo" alt="logo" /> */}
-          <img
+          {pageNavigation}
+          {/* <img
             src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExam1rNWE1c29mOHN6bjl4cTdwMnc2b214dnZ4cXozdTlpNzhtMDQ4NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/fXt5Bh0RIHuJsVfgX0/giphy.gif"
             alt="gif"
             width="200px"
@@ -148,10 +308,13 @@ class App extends React.Component {
               placeholder="Name of City"
               onChange={this.handleInputChange}
               value={this.inputCityValue}
+              required
             />
-            <button onClick={this.handleSubmit}>Check Weather</button>
+            <button variant="contained" onClick={this.handleSubmit}>
+              Check Weather
+            </button>
           </form>
-          {renderWeatherInfo}
+          {renderWeatherInfo} */}
         </header>
       </div>
     );
