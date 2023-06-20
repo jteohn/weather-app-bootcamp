@@ -79,7 +79,7 @@ class ForecastWeather extends React.Component {
                 {convertDay2Date}
               </TableCell>
               <TableCell align="center" style={{ color: "white" }}>
-                {day2Temp}
+                {day2Temp}°C
               </TableCell>
               <TableCell align="center" style={{ color: "white" }}>
                 {day2WeatherDesc}
@@ -94,7 +94,7 @@ class ForecastWeather extends React.Component {
                 {convertDay3Date}
               </TableCell>
               <TableCell align="center" style={{ color: "white" }}>
-                {day3Temp}
+                {day3Temp}°C
               </TableCell>
               <TableCell align="center" style={{ color: "white" }}>
                 {day3WeatherDesc}
@@ -109,7 +109,7 @@ class ForecastWeather extends React.Component {
                 {convertDay4Date}
               </TableCell>
               <TableCell align="center" style={{ color: "white" }}>
-                {day4Temp}
+                {day4Temp}°C
               </TableCell>
               <TableCell align="center" style={{ color: "white" }}>
                 {day4WeatherDesc}
@@ -124,7 +124,7 @@ class ForecastWeather extends React.Component {
                 {convertDay5Date}
               </TableCell>
               <TableCell align="center" style={{ color: "white" }}>
-                {day5Temp}
+                {day5Temp}°C
               </TableCell>
               <TableCell align="center" style={{ color: "white" }}>
                 {day5WeatherDesc}

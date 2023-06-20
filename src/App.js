@@ -206,20 +206,6 @@ class App extends React.Component {
       day5WeatherIcon,
     } = this.state;
 
-    // const weatherIconImg = `https://openweathermap.org/img/wn/${currentWeatherIcon}@2x.png`;
-
-    // const renderWeatherInfo = currentCity ? (
-    //   <div>
-    //     <img src={weatherIconImg} alt="weather icon" />
-    //     <p>Current City: {currentCity}</p>
-    //     <p>Current Temperature: {currentTemp}</p>
-    //     <p>Feels Like: {currentFeelsLike}</p>
-    //     <p>Current Weather: {currentWeather}</p>
-    //   </div>
-    // ) : (
-    //   <p>Enter a city to check weather 🌤🌧☃️</p>
-    // );
-
     const renderWeatherInfo = currentCity ? (
       <div>
         <p className="current-city">Current City: {currentCity}</p>
@@ -296,25 +282,6 @@ class App extends React.Component {
           style={{ backgroundImage: `url(${backgroundImg})` }}
         >
           {pageNavigation}
-          {/* <img
-            src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExam1rNWE1c29mOHN6bjl4cTdwMnc2b214dnZ4cXozdTlpNzhtMDQ4NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/fXt5Bh0RIHuJsVfgX0/giphy.gif"
-            alt="gif"
-            width="200px"
-          />
-          <br />
-          <form>
-            <input
-              type="text"
-              placeholder="Name of City"
-              onChange={this.handleInputChange}
-              value={this.inputCityValue}
-              required
-            />
-            <button variant="contained" onClick={this.handleSubmit}>
-              Check Weather
-            </button>
-          </form>
-          {renderWeatherInfo} */}
         </header>
       </div>
     );

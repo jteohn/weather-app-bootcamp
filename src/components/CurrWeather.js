@@ -38,8 +38,8 @@ class CurrWeather extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody className="table-body">
-              <TableCell align="center">{currentTemp}</TableCell>
-              <TableCell align="center">{currentFeelsLike}</TableCell>
+              <TableCell align="center">{currentTemp}°C</TableCell>
+              <TableCell align="center">{currentFeelsLike}°C</TableCell>
               <TableCell align="center">{currentWeatherDesc}</TableCell>
             </TableBody>
           </Table>
